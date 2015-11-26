@@ -1,0 +1,12 @@
+﻿{
+    sourceDir: 'r:\\Git\\loans\\out\\Debug',
+    targetDir: 'r:\\Git\\loans\\out\\Debug2',
+    appName: 'WCFServer.exe',
+    appArguments: 'cmd debug',
+    ignores: [
+        '\\obj\\',
+        '\\obj'
+    ],
+    afterAppKillDelay: 500,
+    eventThrottlingDelay: 2000
+}
