@@ -1,6 +1,7 @@
 ﻿using System.Configuration;
 using System.IO;
-using System.Web.Script.Serialization;
+
+using Newtonsoft.Json;
 
 namespace ReRunner
 {
@@ -13,10 +14,9 @@ namespace ReRunner
                 throw new ConfigurationErrorsException(string.Format("Configuration file: '{0}' does not exist!", configFile));
             }
 
-            var configuration = File.ReadAllText(configFile);
-            var jss = new JavaScriptSerializer();
+            var js = new JsonSerializer();
 
-            return jss.Deserialize<TConfigurationModel>(configuration);
+            return js.Deserialize<TConfigurationModel>(new JsonTextReader(new StreamReader(configFile)));
         }
     }
 }

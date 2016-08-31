@@ -23,24 +23,29 @@ namespace ReRunner
                 new AppReloadingEventConsumer(configuration));
 
             host.Run();
-            var done = false;
 
-            while (!done)
+            StartCommandLoop();
+        }
+
+        private static void StartCommandLoop()
+        {
+            var quit = false;
+            do
             {
                 var key = Console.ReadKey();
                 switch (key.Key)
                 {
-                    case ConsoleKey.C:      // clean
+                    // clear
+                    case ConsoleKey.C:
                         Console.Clear();
                         break;
 
-                    case ConsoleKey.Q:      // close
-                        ////case ConsoleKey.Enter:  // close
-                        Console.WriteLine("quiting...");
-                        done = true;
+                    // quit
+                    case ConsoleKey.Q:
+                        quit = true;
                         break;
                 }
-            }
+            } while (!quit);
         }
     }
 }
