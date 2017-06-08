@@ -9,5 +9,7 @@
         public int afterAppKillDelay; // miliseconds - need to make sure locked resources are freed
         public string[] ignores;
         public int eventThrottlingDelay; // miliseconds
+        public bool killByProcessNameEnabled;
+        public string processName;
     }
 }

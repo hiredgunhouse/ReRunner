@@ -5,3 +5,5 @@ packages/
 ReRunner/bin/
 ReRunner/obj/
 .vs/
+ReRunner.v3.ncrunchsolution.user
+.idea/

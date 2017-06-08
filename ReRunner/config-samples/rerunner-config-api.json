@@ -1,0 +1,14 @@
+﻿{
+    "sourceDir": ".\\bin\\Debug\\net462\\win7-x86",
+    "targetDir": ".\\bin\\Debug2\\net462\\win7-x86",
+    "appName": "ACME.Fibonacci.Api.exe",
+    "appArguments": "",
+    "ignores": [
+        "\\obj\\",
+        "\\obj"
+    ],
+    "killByProcessNameEnabled": true,
+    "processName": "ACME.Fibonacci.Api",
+    "afterAppKillDelay": 500,
+    "eventThrottlingDelay": 2000
+}

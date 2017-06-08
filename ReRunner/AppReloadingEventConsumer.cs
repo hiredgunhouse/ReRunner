@@ -1,6 +1,8 @@
 using System;
+using System.Configuration;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Threading;
 
@@ -36,9 +38,41 @@ namespace ReRunner
                 {
                     log.Info("Killing the app...");
                     process.Kill();
-                    Thread.Sleep(TimeSpan.FromMilliseconds(this.Configuration.afterAppKillDelay));
+                    process.WaitForExit();
+                }
+                else
+                {
+                    log.Info("Process has exited.");
                 }
             }
+            else
+            {
+                log.Info("Process was null.");
+            }
+
+            if (this.Configuration.killByProcessNameEnabled)
+            {
+                var processName = this.Configuration.processName;
+                if (string.IsNullOrEmpty(processName))
+                {
+                    throw new ConfigurationException("processName cannot be empty when killByProcessNameEnabled is set to true");
+                }
+
+                var processToBeKilled = Process.GetProcessesByName(processName).FirstOrDefault();
+                if (processToBeKilled != null)
+                {
+                    log.Info($"Killing process {processName}");
+                    processToBeKilled.Kill();
+                    processToBeKilled.WaitForExit();
+                    log.Info($"Killed process {processName}");
+                }
+                else
+                {
+                    log.Warn($"Could not find process with name {processName}");
+                }
+            }
+            
+            Thread.Sleep(TimeSpan.FromMilliseconds(this.Configuration.afterAppKillDelay));
         }
 
         private void CleanupTarget()

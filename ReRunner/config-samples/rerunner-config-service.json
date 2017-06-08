@@ -1,0 +1,14 @@
+﻿{
+    "sourceDir": ".\\source\\Fibonacci.Service\\bin\\Debug",
+    "targetDir": "\\source\\Fibonacci.Service\\bin\\Debug2",
+    "appName": "ACME.Fibonacci.Service.exe",
+    "appArguments": "",
+    "ignores": [
+        "\\obj\\",
+        "\\obj"
+    ],
+    "killByProcessNameEnabled": false,
+    "processName": "",
+    "afterAppKillDelay": 500,
+    "eventThrottlingDelay": 2000
+}
