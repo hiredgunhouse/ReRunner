@@ -55,7 +55,7 @@ namespace ReRunner
                 var processName = this.Configuration.processName;
                 if (string.IsNullOrEmpty(processName))
                 {
-                    throw new ConfigurationException("processName cannot be empty when killByProcessNameEnabled is set to true");
+                    throw new ConfigurationErrorsException("processName cannot be empty when killByProcessNameEnabled is set to true");
                 }
 
                 var processToBeKilled = Process.GetProcessesByName(processName).FirstOrDefault();
