@@ -22,12 +22,13 @@ namespace ReRunner
                 new FileSystemWatcherEventProducer(configuration),
                 new AppReloadingEventConsumer(configuration));
 
+
             host.Run();
 
-            StartCommandLoop();
+            StartCommandLoop(configuration);
         }
 
-        private static void StartCommandLoop()
+        private static void StartCommandLoop(AppReloadingConfigurationModel configuration)
         {
             var quit = false;
             do
@@ -40,12 +41,30 @@ namespace ReRunner
                         Console.Clear();
                         break;
 
+                    // rerun
+                    case ConsoleKey.R:
+                        TriggerReRun(configuration);
+                        
+                        break;
+
                     // quit
                     case ConsoleKey.Q:
                         quit = true;
                         break;
                 }
             } while (!quit);
+        }
+
+        private static void TriggerReRun(AppReloadingConfigurationModel configuration)
+        {
+            using (
+                File.Create(
+                    Path.Combine(
+                        configuration.sourceDir,
+                        $"{DateTime.Now:yyyy-MM-dd HH-mm-ss}.tmp")))
+            {
+                Console.WriteLine("Rerunning app...");
+            }
         }
     }
 }
