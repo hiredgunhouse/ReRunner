@@ -10,5 +10,7 @@
     "killByProcessNameEnabled": false,
     "processName": "",
     "afterAppKillDelay": 500,
-    "eventThrottlingDelay": 2000
+    "eventThrottlingDelay": 2000,
+    "numberOfRetries": 5,
+    "retryBackOffDelay": 10000
 }

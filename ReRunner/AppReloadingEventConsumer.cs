@@ -17,17 +17,45 @@ namespace ReRunner
         public AppReloadingEventConsumer(AppReloadingConfigurationModel configuration)
         {
             this.Configuration = configuration;
+            this.RetryCounter = 0;
         }
 
         protected AppReloadingConfigurationModel Configuration { get; set; }
         protected Process Process { get; set; }
+        
+        private int RetryCounter { get; set; }
+        private Exception LastException { get; set; }
 
         public void Consume(FileSystemEventArgs eventArgs)
         {
-            this.KillTargetApp(this.Process);
-            this.CleanupTarget();
-            this.DeployToTarget();
-            this.Process = this.RunTargetApp();
+            try
+            {
+                this.KillTargetApp(this.Process);
+                this.CleanupTarget();
+                this.DeployToTarget();
+                this.Process = this.RunTargetApp();
+                
+                this.RetryCounter = 0;
+            }
+            catch (Exception ex)
+            {
+                if (this.LastException?.GetType() == ex.GetType())
+                {
+                    this.RetryCounter++;
+                    Thread.Sleep(this.Configuration.retryBackOffDelay);
+                }
+                else
+                {
+                    this.RetryCounter = 0;
+                }
+                
+                Console.WriteLine(ex);
+
+                if (this.RetryCounter >= this.Configuration.numberOfRetries)
+                {
+                    throw;
+                }
+            }
         }
 
         private void KillTargetApp(Process process)

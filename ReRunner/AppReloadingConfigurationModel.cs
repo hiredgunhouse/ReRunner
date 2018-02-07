@@ -11,5 +11,7 @@
         public int eventThrottlingDelay; // miliseconds
         public bool killByProcessNameEnabled;
         public string processName;
+        public int numberOfRetries;
+        public int retryBackOffDelay;
     }
 }
